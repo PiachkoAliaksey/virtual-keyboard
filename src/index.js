@@ -63,9 +63,10 @@ function addData(){
 }
 addData();
 
+
 document.onkeydown=function(event){
-    console.log(event.code);
-    console.log(event.key);
+    //console.log(event.code);
+    //console.log(event.key);
     document.querySelectorAll('.keyB, .keyBcs, .keyBcsSpace').forEach((val)=>{
         val.classList.remove('btnActive');
     })
@@ -78,5 +79,18 @@ document.onkeydown=function(event){
         document.querySelector('.keyB[data="'+ event.code +'"]').classList.add('btnActive');
 
     }
-     
-}
+};
+
+document.querySelectorAll('.keyB, .keyBcs, .keyBcsSpace').forEach(function(val){
+    val.onclick=function(event){
+        document.querySelectorAll('.keyB, .keyBcs, .keyBcsSpace').forEach((val)=>{
+            val.classList.remove('btnActive');
+        });
+
+        let eventCode=this.getAttribute('data');
+        this.classList.add('btnActive');
+    }
+})
+
+
+

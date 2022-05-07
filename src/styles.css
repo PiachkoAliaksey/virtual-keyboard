@@ -44,7 +44,7 @@
     font-size: 14px;
     color: black;
     font-family:'Times New Roman', sans-serif;
-    transition: 0.3s ease;
+    
 }
 
 .keyBcs{
@@ -60,7 +60,7 @@
     font-size: 14px;
     color: black;
     font-family:'Times New Roman', sans-serif;
-    transition: 0.3s ease;
+    
 
 }
 .keyBcsSpace{
@@ -76,7 +76,7 @@
     font-size: 14px;
     color: black;
     font-family:'Times New Roman', sans-serif;
-    transition: 0.3s ease;
+    
 }
 /*.keyBcsAlt{
     display: block;
