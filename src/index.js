@@ -18,6 +18,15 @@ let blockChild=document.createElement('div');
 blockChild.className='blockChild';
 blockDiv.appendChild(blockChild);
 
+let blockInformation=document.createElement('p');
+blockInformation.className='blockInformation';
+blockInformation.textContent='Виртуальная клавиатура создана в операционнной системе Windows';
+blockDiv.appendChild(blockInformation);
+
+let blockRuEn=document.createElement('p');
+blockRuEn.className='blockInformation';
+blockRuEn.textContent='Для переключения языка комбинация: левые Ctrl + Alt';
+blockDiv.appendChild(blockRuEn);
 
 let arrNumKeys=['`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Backspace', 'Tab', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']', '\\','DEL','CapsLock', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', "'", 'Enter', 'Shift', 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/','&#129045' ,'Shift', 'Ctrl', 'WIN', 'Alt', ' ', 'Alt', 'Ctrl', '&#129044', '&#129047','&#129046'];
 let arrCode=['Backquote', 'Digit1', 'Digit2', 'Digit3', 'Digit4', 'Digit5', 'Digit6', 'Digit7', 'Digit8', 'Digit9', 'Digit0', 'Minus', 'Equal', 'Backspace', 'Tab', 'KeyQ', 'KeyW', 'KeyE', 'KeyR', 'KeyT', 'KeyY', 'KeyU', 'KeyI', 'KeyO', 'KeyP', 'BracketLeft', 'BracketRight', 'Backslash', 'Delete','CapsLock', 'KeyA', 'KeyS', 'KeyD', 'KeyF', 'KeyG', 'KeyH', 'KeyJ', 'KeyK', 'KeyL', 'Semicolon', 'Quote', 'Enter', 'ShiftLeft', 'KeyZ', 'KeyX', 'KeyC', 'KeyV', 'KeyB', 'KeyN', 'KeyM', 'Comma', 'Period', 'Slash','ArrowUp','ShiftRight', 'ControlLeft', 'MetaLeft', 'AltLeft', 'Space', 'AltRight', 'ControlRight', 'ArrowLeft', 'ArrowDown', 'ArrowRight'];
@@ -67,9 +76,19 @@ addData();
 document.onkeydown=function(event){
     //console.log(event.code);
     //console.log(event.key);
-    document.querySelectorAll('.keyB, .keyBcs, .keyBcsSpace').forEach((val)=>{
-        val.classList.remove('btnActive');
-    })
+    document.onkeyup=function(event){
+        if(event.code==='Backspace'||event.code==='CapsLock'|| event.code==='ShiftLeft'||event.code==='ShiftRight'||event.code==='Enter'){
+            document.querySelector('.keyBcs[data="'+ event.code +'"]').classList.remove('btnActive');
+    
+        }else if(event.code==='Space'){
+            document.querySelector('.keyBcsSpace[data="'+ event.code +'"]').classList.remove('btnActive');
+        }else{
+            document.querySelector('.keyB[data="'+ event.code +'"]').classList.remove('btnActive');
+    
+        }
+        
+    }
+    
     if(event.code==='Backspace'||event.code==='CapsLock'|| event.code==='ShiftLeft'||event.code==='ShiftRight'||event.code==='Enter'){
         document.querySelector('.keyBcs[data="'+ event.code +'"]').classList.add('btnActive');
 
@@ -90,6 +109,16 @@ document.querySelectorAll('.keyB, .keyBcs, .keyBcsSpace').forEach(function(val){
         let eventCode=this.getAttribute('data');
         this.classList.add('btnActive');
     }
+})
+
+let btnKeys=document.querySelectorAll('.keyB, .keyBcs, .keyBcsSpace');
+btnKeys.forEach((val)=>{
+    val.addEventListener('mouseover',function(){
+        val.classList.add('btnActiveDark');
+        val.addEventListener('mouseout',function(){
+            val.classList.remove('btnActiveDark');
+        })
+    })
 })
 
 
