@@ -2,6 +2,8 @@ import './styles.css';
 import index2 from './index2';
 
 
+
+
 let blockDiv=document.createElement('div');
 blockDiv.textContent='Virtual Keyboard'
 blockDiv.className='container';
@@ -29,33 +31,42 @@ blockDiv.appendChild(blockRuEn);
 
 let arrNumKeys=['`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Backspace', 'Tab', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']', '\\','DEL','CapsLock', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', "'", 'Enter', 'Shift', 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/','🠥' ,'Shift', 'Ctrl', 'WIN', 'Alt', ' ', 'Alt', 'Ctrl', '🠤', '🠧','🠦'];
 let arrCode=['Backquote', 'Digit1', 'Digit2', 'Digit3', 'Digit4', 'Digit5', 'Digit6', 'Digit7', 'Digit8', 'Digit9', 'Digit0', 'Minus', 'Equal', 'Backspace', 'Tab', 'KeyQ', 'KeyW', 'KeyE', 'KeyR', 'KeyT', 'KeyY', 'KeyU', 'KeyI', 'KeyO', 'KeyP', 'BracketLeft', 'BracketRight', 'Backslash', 'Delete','CapsLock', 'KeyA', 'KeyS', 'KeyD', 'KeyF', 'KeyG', 'KeyH', 'KeyJ', 'KeyK', 'KeyL', 'Semicolon', 'Quote', 'Enter', 'ShiftLeft', 'KeyZ', 'KeyX', 'KeyC', 'KeyV', 'KeyB', 'KeyN', 'KeyM', 'Comma', 'Period', 'Slash','ArrowUp','ShiftRight', 'ControlLeft', 'MetaLeft', 'AltLeft', 'Space', 'AltRight', 'ControlRight', 'ArrowLeft', 'ArrowDown', 'ArrowRight'];
+let arrRu=['ё', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Backspace', 'Tab', 'й', 'ц', 'у', 'к', 'е', 'н', 'г', 'ш', 'щ', 'з', 'х', 'ъ', '\\','DEL','CapsLock', 'ф', 'ы', 'в', 'а', 'п', 'р', 'о', 'л', 'д', 'ж', "э", 'Enter', 'Shift', 'я', 'ч', 'с', 'м', 'и', 'т', 'ь', 'б', 'ю', '/','🠥' ,'Shift', 'Ctrl', 'WIN', 'Alt', ' ', 'Alt', 'Ctrl', '🠤', '🠧','🠦'];
 
-/*document.onkeydown=function(event){
-    arrCode.push(event.code);
-    console.log(arrCode);
-}*/
+localStorage.setItem('arrEn',JSON.stringify(arrNumKeys));
+localStorage.setItem('arrRu',JSON.stringify(arrRu));
+let arrEnLocalSt;
+let flag=false;
+if(flag){
+    arrEnLocalSt=localStorage.getItem('arrRu');
+    arrEnLocalSt=JSON.parse(arrEnLocalSt);
+}else{
+arrEnLocalSt=localStorage.getItem('arrEn');
+arrEnLocalSt=JSON.parse(arrEnLocalSt);
+}
+
 
 
 function buildKeyboard(){
     let board='';
     
-    for(let i=0;i<arrNumKeys.length;i++){
+    for(let i=0;i<arrEnLocalSt.length;i++){
         
-            if(arrNumKeys[i]==='Backspace'||arrNumKeys[i]==='CapsLock'||arrNumKeys[i]==='Enter'||arrNumKeys[i]==='Shift'){
+            if(arrEnLocalSt[i]==='Backspace'||arrEnLocalSt[i]==='CapsLock'||arrEnLocalSt[i]==='Enter'||arrEnLocalSt[i]==='Shift'){
                 if(i==14||i==29||i==42||i==55){
                     board+='<div class="clearBlock"></div>'
                 }
-                board+=`<div class="keyBcs">${arrNumKeys[i]}</div>`;
-            }else if(arrNumKeys[i]===' '){
+                board+=`<div class="keyBcs">${arrEnLocalSt[i]}</div>`;
+            }else if(arrEnLocalSt[i]===' '){
                 if(i==14||i==29||i==42||i==55){
                     board+='<div class="clearBlock"></div>'
                 }
-                board+=`<div class="keyBcsSpace">${arrNumKeys[i]}</div>`;
+                board+=`<div class="keyBcsSpace">${arrEnLocalSt[i]}</div>`;
             }else{
                 if(i==14||i==29||i==42||i==55){
                     board+='<div class="clearBlock"></div>'
                 }
-                board+=`<div class="keyB">${arrNumKeys[i]}</div>`;
+                board+=`<div class="keyB">${arrEnLocalSt[i]}</div>`;
             }  
     }
     document.querySelector('.blockChild').innerHTML=board;
@@ -80,26 +91,45 @@ let textPress=[];
 
 btnKeys.forEach((val)=>{
     val.addEventListener('click',function(){
-        textPress.push(val.textContent);
-        console.log(val.textContent);
+        if(val.textContent.length===1||val.textContent==='🠥'||val.textContent==='🠤'||val.textContent==='🠧'||val.textContent==='🠦'){
+            textPress.push(val.textContent);
+           
+        }
+        if(val.textContent==='Backspace'){
+            textPress.pop();
+        }
+        if(val.textContent==='Tab'){
+            textPress.push(' ');
+        }
+        if(val.textContent==='CapsLock'){
+            document.querySelectorAll('.keyB').forEach((val)=>{
+                if(val.textContent.length===1 && val.textContent !==val.textContent.toLocaleUpperCase()){
+                    val.textContent=val.textContent.toLocaleUpperCase();
+                }else  if(val.textContent.length===1 && val.textContent !==val.textContent.toLocaleLowerCase()){
+                    val.textContent=val.textContent.toLocaleLowerCase();
+                }
+
+            })
+        }
+
+
+
         textArea.textContent=textPress.join('')
     })
 })
 
 
-let flag=false;
 
-let arrRu=['ё', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Backspace', 'Tab', 'й', 'ц', 'у', 'к', 'е', 'н', 'г', 'ш', 'щ', 'з', 'х', 'ъ', '\\','DEL','CapsLock', 'ф', 'ы', 'в', 'а', 'п', 'р', 'о', 'л', 'д', 'ж', "э", 'Enter', 'Shift', 'я', 'ч', 'с', 'м', 'и', 'т', 'ь', 'б', 'ю', '/','🠥' ,'Shift', 'Ctrl', 'WIN', 'Alt', ' ', 'Alt', 'Ctrl', '🠤', '🠧','🠦']
-
-localStorage.setItem('arrRu',JSON.stringify(arrRu));
 
 document.onkeydown=function(event){
 
     if(event.code==='ShiftLeft') flag=true;
+    console.log(flag)
     if(flag&&event.code==='AltLeft'){
+        flag=false;
         let arrRuLocalSt=localStorage.getItem('arrRu');
         arrRuLocalSt=JSON.parse(arrRuLocalSt);
-        flag=false;
+        
         let textBtnK=document.querySelectorAll('.keyB, .keyBcs, .keyBcsSpace');
         if(textBtnK[0].textContent !==arrRuLocalSt[0]){
             for(let i=0;i<arrRuLocalSt.length;i++){ 
@@ -109,9 +139,10 @@ document.onkeydown=function(event){
             }
 
         }else{
-            for(let i=0;i<arrNumKeys.length;i++){
+            flag=false;
+            for(let i=0;i<arrEnLocalSt.length;i++){
                 if( textBtnK[i].getAttribute('data')!=='ArrowUp'||textBtnK[i].getAttribute('data')!=='ArrowLeft'||textBtnK[i].getAttribute('data')!=='ArrowDown'||textBtnK[i].getAttribute('data')!=='ArrowRight'){
-                    textBtnK[i].textContent=arrNumKeys[i];
+                    textBtnK[i].textContent=arrEnLocalSt[i];
                 }
                 
             }
@@ -149,8 +180,6 @@ document.onkeydown=function(event){
     textArea.textContent=textPress.join('')
 
 
-    //console.log(event.code);
-    //console.log(event.key);
     document.onkeyup=function(event){
         if(event.code==='Backspace'||event.code==='CapsLock'|| event.code==='ShiftLeft'||event.code==='ShiftRight'||event.code==='Enter'){
             document.querySelector('.keyBcs[data="'+ event.code +'"]').classList.remove('btnActive'); 
@@ -195,7 +224,6 @@ btnKeys.forEach((val)=>{
             val.addEventListener('mousedown',function(){
             val.classList.add('btnActive')
             val.classList.remove('btnActiveDark');
-            console.log(val.textContent);
             val.addEventListener('mouseup',function(){
                 val.classList.remove('btnActive');
                 val.classList.add('btnActiveDark');
