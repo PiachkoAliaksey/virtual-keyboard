@@ -118,7 +118,6 @@ btnKeys.forEach((val)=>{
 document.onkeydown=function(event){
 
     if(event.code==='ShiftLeft') flag=true;
-    console.log(flag)
     if(flag&&event.code==='AltLeft'){
         let arrRuLocalSt=localStorage.getItem('arrRu');
         arrRuLocalSt=JSON.parse(arrRuLocalSt);
