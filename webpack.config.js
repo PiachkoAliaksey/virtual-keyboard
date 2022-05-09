@@ -26,7 +26,12 @@ const config = {
             filename:'[hash].[name].main.html',
             template: './src/index.html',
         }),
-        new CleanWebpackPlugin()
+        new CleanWebpackPlugin({
+            cleanOnceBeforeBuildPatterns: [
+                '**/*',
+                '!.git',
+            ],
+        })
 
         // Add your plugins here
         // Learn more about plugins from https://webpack.js.org/configuration/plugins/

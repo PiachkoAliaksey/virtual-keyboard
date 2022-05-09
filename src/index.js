@@ -35,15 +35,9 @@ let arrRu=['ё', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Ba
 
 localStorage.setItem('arrEn',JSON.stringify(arrNumKeys));
 localStorage.setItem('arrRu',JSON.stringify(arrRu));
-let arrEnLocalSt;
-let flag=false;
-if(flag){
-    arrEnLocalSt=localStorage.getItem('arrRu');
-    arrEnLocalSt=JSON.parse(arrEnLocalSt);
-}else{
-arrEnLocalSt=localStorage.getItem('arrEn');
+let arrEnLocalSt=arrEnLocalSt=localStorage.getItem('arrEn');
 arrEnLocalSt=JSON.parse(arrEnLocalSt);
-}
+let flag=false;
 
 
 
@@ -99,7 +93,7 @@ btnKeys.forEach((val)=>{
             textPress.pop();
         }
         if(val.textContent==='Tab'){
-            textPress.push(' ');
+            textPress.push('\t');
         }
         if(val.textContent==='CapsLock'){
             document.querySelectorAll('.keyB').forEach((val)=>{
@@ -126,10 +120,8 @@ document.onkeydown=function(event){
     if(event.code==='ShiftLeft') flag=true;
     console.log(flag)
     if(flag&&event.code==='AltLeft'){
-        flag=false;
         let arrRuLocalSt=localStorage.getItem('arrRu');
         arrRuLocalSt=JSON.parse(arrRuLocalSt);
-        
         let textBtnK=document.querySelectorAll('.keyB, .keyBcs, .keyBcsSpace');
         if(textBtnK[0].textContent !==arrRuLocalSt[0]){
             for(let i=0;i<arrRuLocalSt.length;i++){ 
@@ -177,6 +169,14 @@ document.onkeydown=function(event){
     if(event.code==='ArrowRight'){
         textPress.push('🠦')
     }
+    if(event.code==='Enter'){
+        textPress.push('\n')
+    }
+    if(event.code==='Tab'){
+        textPress.push('\t')
+    }
+
+
     textArea.textContent=textPress.join('')
 
 
