@@ -116,6 +116,8 @@ btnKeys.forEach((val)=>{
 
 
 document.onkeydown=function(event){
+    
+    
 
     if(event.code==='ShiftLeft') flag=true;
     if(flag&&event.code==='AltLeft'){
@@ -186,8 +188,8 @@ document.onkeydown=function(event){
         }else if(event.code==='Space'){
             document.querySelector('.keyBcsSpace[data="'+ event.code +'"]').classList.remove('btnActive');
         }else{
-            document.querySelector('.keyB[data="'+ event.code +'"]').classList.remove('btnActive');
-    
+            let keyBB=document.querySelector('.keyB[data="'+ event.code +'"]');
+            keyBB.classList.remove('btnActive');
         }
        
     }
@@ -208,7 +210,8 @@ document.onkeydown=function(event){
     }else if(event.code==='Space'){
         document.querySelector('.keyBcsSpace[data="'+ event.code +'"]').classList.add('btnActive');
     }else{
-        document.querySelector('.keyB[data="'+ event.code +'"]').classList.add('btnActive');
+        let keyBY=document.querySelector('.keyB[data="'+ event.code +'"]');
+        keyBY.classList.add('btnActive');
 
     }
 
