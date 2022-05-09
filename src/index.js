@@ -27,7 +27,7 @@ blockRuEn.className='blockInformation';
 blockRuEn.textContent='Для переключения языка комбинация: левые Shift + Alt';
 blockDiv.appendChild(blockRuEn);
 
-let arrNumKeys=['`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Backspace', 'Tab', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']', '\\','DEL','CapsLock', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', "'", 'Enter', 'Shift', 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/','&#129045' ,'Shift', 'Ctrl', 'WIN', 'Alt', ' ', 'Alt', 'Ctrl', '&#129044', '&#129047','&#129046'];
+let arrNumKeys=['`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Backspace', 'Tab', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']', '\\','DEL','CapsLock', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', "'", 'Enter', 'Shift', 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/','🠥' ,'Shift', 'Ctrl', 'WIN', 'Alt', ' ', 'Alt', 'Ctrl', '🠤', '🠧','🠦'];
 let arrCode=['Backquote', 'Digit1', 'Digit2', 'Digit3', 'Digit4', 'Digit5', 'Digit6', 'Digit7', 'Digit8', 'Digit9', 'Digit0', 'Minus', 'Equal', 'Backspace', 'Tab', 'KeyQ', 'KeyW', 'KeyE', 'KeyR', 'KeyT', 'KeyY', 'KeyU', 'KeyI', 'KeyO', 'KeyP', 'BracketLeft', 'BracketRight', 'Backslash', 'Delete','CapsLock', 'KeyA', 'KeyS', 'KeyD', 'KeyF', 'KeyG', 'KeyH', 'KeyJ', 'KeyK', 'KeyL', 'Semicolon', 'Quote', 'Enter', 'ShiftLeft', 'KeyZ', 'KeyX', 'KeyC', 'KeyV', 'KeyB', 'KeyN', 'KeyM', 'Comma', 'Period', 'Slash','ArrowUp','ShiftRight', 'ControlLeft', 'MetaLeft', 'AltLeft', 'Space', 'AltRight', 'ControlRight', 'ArrowLeft', 'ArrowDown', 'ArrowRight'];
 
 /*document.onkeydown=function(event){
@@ -45,12 +45,12 @@ function buildKeyboard(){
                 if(i==14||i==29||i==42||i==55){
                     board+='<div class="clearBlock"></div>'
                 }
-                board+=`<div class="keyBcs"> ${arrNumKeys[i]} </div>`;
+                board+=`<div class="keyBcs">${arrNumKeys[i]}</div>`;
             }else if(arrNumKeys[i]===' '){
                 if(i==14||i==29||i==42||i==55){
                     board+='<div class="clearBlock"></div>'
                 }
-                board+=`<div class="keyBcsSpace"> ${arrNumKeys[i]} </div>`;
+                board+=`<div class="keyBcsSpace">${arrNumKeys[i]}</div>`;
             }else{
                 if(i==14||i==29||i==42||i==55){
                     board+='<div class="clearBlock"></div>'
@@ -72,24 +72,48 @@ function addData(){
 }
 addData();
 
+let btnKeys=document.querySelectorAll('.keyB, .keyBcs, .keyBcsSpace');
+
 let textArea=document.querySelector('.blockTextarea');
 let textPress=[];
+
+
+btnKeys.forEach((val)=>{
+    val.addEventListener('click',function(){
+        textPress.push(val.textContent);
+        console.log(val.textContent);
+        textArea.textContent=textPress.join('')
+    })
+})
+
+
 let flag=false;
-let arrRu=['ё', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Backspace', 'Tab', 'й', 'ц', 'у', 'к', 'е', 'н', 'г', 'ш', 'щ', 'з', 'х', 'ъ', '\\','DEL','CapsLock', 'ф', 'ы', 'в', 'а', 'п', 'р', 'о', 'л', 'д', 'ж', "э", 'Enter', 'Shift', 'я', 'ч', 'с', 'м', 'и', 'т', 'ь', 'б', 'ю', '/','&#129045' ,'Shift', 'Ctrl', 'WIN', 'Alt', ' ', 'Alt', 'Ctrl', '&#129044', '&#129047','&#129046']
+
+let arrRu=['ё', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Backspace', 'Tab', 'й', 'ц', 'у', 'к', 'е', 'н', 'г', 'ш', 'щ', 'з', 'х', 'ъ', '\\','DEL','CapsLock', 'ф', 'ы', 'в', 'а', 'п', 'р', 'о', 'л', 'д', 'ж', "э", 'Enter', 'Shift', 'я', 'ч', 'с', 'м', 'и', 'т', 'ь', 'б', 'ю', '/','🠥' ,'Shift', 'Ctrl', 'WIN', 'Alt', ' ', 'Alt', 'Ctrl', '🠤', '🠧','🠦']
+
+localStorage.setItem('arrRu',JSON.stringify(arrRu));
+
 document.onkeydown=function(event){
 
     if(event.code==='ShiftLeft') flag=true;
     if(flag&&event.code==='AltLeft'){
+        let arrRuLocalSt=localStorage.getItem('arrRu');
+        arrRuLocalSt=JSON.parse(arrRuLocalSt);
         flag=false;
         let textBtnK=document.querySelectorAll('.keyB, .keyBcs, .keyBcsSpace');
-        if(textBtnK[0].textContent !==arrRu[0]){
-            for(let i=0;i<arrRu.length;i++){
-                textBtnK[i].textContent=`${arrRu[i]}`;
+        if(textBtnK[0].textContent !==arrRuLocalSt[0]){
+            for(let i=0;i<arrRuLocalSt.length;i++){ 
+                if( textBtnK[i].getAttribute('data')!=='ArrowUp'||textBtnK[i].getAttribute('data')!=='ArrowLeft'||textBtnK[i].getAttribute('data')!=='ArrowDown'||textBtnK[i].getAttribute('data')!=='ArrowRight'){
+                    textBtnK[i].textContent=arrRuLocalSt[i];
+                }   
             }
 
         }else{
             for(let i=0;i<arrNumKeys.length;i++){
-                textBtnK[i].textContent=`${arrNumKeys[i]}`;
+                if( textBtnK[i].getAttribute('data')!=='ArrowUp'||textBtnK[i].getAttribute('data')!=='ArrowLeft'||textBtnK[i].getAttribute('data')!=='ArrowDown'||textBtnK[i].getAttribute('data')!=='ArrowRight'){
+                    textBtnK[i].textContent=arrNumKeys[i];
+                }
+                
             }
         }
       
@@ -110,8 +134,20 @@ document.onkeydown=function(event){
     /*if(event.code==='Tab'){
         textPress.push('')
     }*/
+    if(event.code==='ArrowUp'){
+        textPress.push('🠥')
+    }
+    if(event.code==='ArrowLeft'){
+        textPress.push('🠤')
+    }
+    if(event.code==='ArrowDown'){
+        textPress.push('🠧')
+    }
+    if(event.code==='ArrowRight'){
+        textPress.push('🠦')
+    }
+    textArea.textContent=textPress.join('')
 
-    textArea.textContent=textPress.join('');
 
     //console.log(event.code);
     //console.log(event.key);
@@ -148,23 +184,18 @@ document.onkeydown=function(event){
 
     }
 
-  
-
-
 
 };
 
 
-let btnKeys=document.querySelectorAll('.keyB, .keyBcs, .keyBcsSpace');
+
 btnKeys.forEach((val)=>{
     val.addEventListener('mouseover',function(){
         val.classList.add('btnActiveDark');
             val.addEventListener('mousedown',function(){
             val.classList.add('btnActive')
             val.classList.remove('btnActiveDark');
-            
-                textPress.push(val.textContent);
-            
+            console.log(val.textContent);
             val.addEventListener('mouseup',function(){
                 val.classList.remove('btnActive');
                 val.classList.add('btnActiveDark');
@@ -177,3 +208,5 @@ btnKeys.forEach((val)=>{
         val.classList.remove('btnActiveDark');
     })
 })
+
+
